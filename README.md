@@ -51,7 +51,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 Contributions are welcome! Please feel free to submit a pull request or report issues.
 
 ## Author
-[Your Name] - [Your Email]
+Harry Graham
 
 ## Acknowledgements
 - `tqdm` for progress bar implementation.
