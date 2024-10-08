@@ -8,8 +8,9 @@ from time import time
 from plyer import notification
 
 def is_safe_directory(directory):
-    unsafe_directories = ['/', 'C:\\', '/home/harrygraham']
-    if directory in unsafe_directories:
+    # Define critical system directories that should not be erased
+    unsafe_directories = ['/', 'C:\\', '/home', '/root', os.path.expanduser('~')]
+    if os.path.abspath(directory) in map(os.path.abspath, unsafe_directories):
         return False
     return True
 
@@ -95,26 +96,35 @@ if __name__ == "__main__":
     # Ask the user if they want verbose mode
     verbose = input("Enable verbose mode? (yes/no): ").lower() == 'yes'
 
-    # Use the correct directory for your username
-    if platform.system() == 'Windows':
-        directory = f'C:\\Users\\harrygraham'
-    else:
-        directory = '/Users/harrygraham'
+    # Ask the user to input the directory
+    directory = input("Enter the directory you want to erase free space on: ")
 
     # Check if the directory is safe to use
     if not is_safe_directory(directory):
         print("Warning: You are trying to erase a critical directory. Operation aborted.")
         sys.exit(1)
 
-    # Display the amount of free space available
-    free_space_gb = get_free_space(directory) / (1024 ** 3)
-    print(f"Free space available: {free_space_gb:.2f} GB")
+    # Check if the directory exists
+    if not os.path.isdir(directory):
+        print("Error: The specified directory does not exist.")
+        sys.exit(1)
+
+    # Display the amount of free space available before the secure erase
+    free_space_before_gb = get_free_space(directory) / (1024 ** 3)
+    print(f"Free space available before secure erase: {free_space_before_gb:.2f} GB")
 
     # Ask user for confirmation before starting the secure erase process
     confirm = input("Do you want to proceed with the secure erase? (yes/no): ").lower()
     if confirm == 'yes':
         # Perform the secure erase with the specified number of passes
         secure_erase_free_space(directory, passes=passes, verbose=verbose)
+        
+        # Display the amount of free space available after the secure erase
+        free_space_after_gb = get_free_space(directory) / (1024 ** 3)
+        print(f"Free space available after secure erase: {free_space_after_gb:.2f} GB")
+        
+        # Notify the user about the completion
         notify_user("Secure Erase Complete", "Your secure erase operation has finished successfully.")
     else:
         print("Secure erase canceled.")
+
