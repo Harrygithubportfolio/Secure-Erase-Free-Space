@@ -1,58 +1,27 @@
-# Secure Erase Free Space
+# Free Space Eraser
 
-## Overview
-This Python script securely erases the free space on a specified directory by overwriting it with data multiple times. It provides an option for the user to specify the number of passes, which increases the security of the erasure by making it harder to recover the overwritten data. The script includes a verbose mode for detailed progress information and uses the `plyer` library to send desktop notifications once the operation is complete.
+This Python script securely erases free space on a given directory by overwriting it with random data and allows users to check the available free space before and after the process. It provides an option to perform multiple overwrite passes for enhanced security and features a progress bar for visual feedback during the erasure process.
 
 ## Features
-- **Secure Free Space Erasure**: Overwrites the free space in the specified directory with data multiple times.
-- **Customizable Passes**: Allows the user to specify the number of overwrite passes for added security.
-- **Verbose Mode**: Provides detailed progress updates, including the estimated time remaining.
-- **Signal Handling**: Gracefully handles interruptions (e.g., Ctrl+C) by cleaning up and exiting.
-- **Cross-Platform Support**: Compatible with both Windows and Unix-based systems.
-- **Desktop Notifications**: Notifies the user upon completion of the secure erase operation.
 
-## Prerequisites
-- **Python 3.x**
-- **Required Libraries**: Install the necessary Python libraries using the following command:
-  ```sh
-  pip install tqdm plyer
-  ```
+- **Secure Erasure**: The script securely overwrites free space in a given directory with random data to prevent data recovery.
+- **Multiple Passes**: The script allows the user to specify how many times they want to overwrite the free space for added security.
+- **Before and After Free Space**: It displays the amount of free space available in the directory before and after the secure erase process.
+- **Progress Bar**: A progress bar (`tqdm`) is shown during the overwrite process to visualize the progress.
+- **Verbose Mode**: An optional verbose mode shows additional details like remaining time and the amount of free space left.
+- **System Safety**: The script ensures that critical directories (like `/` or `C:\`) are protected by preventing the user from performing dangerous operations on them.
+- **Graceful Exit**: The script captures `Ctrl+C` (SIGINT) to allow for a clean exit, ensuring that the system remains stable even if interrupted.
+- **Notification**: The script uses the `plyer` module to send a desktop notification upon the successful completion of the secure erasure.
 
-## Usage
-1. **Run the Script**:
-   - Execute the script from the command line:
-     ```sh
-     python secure_erase_free_space.py
-     ```
+## Requirements
 
-2. **Input Number of Passes**:
-   - The script will prompt you to enter the number of passes for secure erasure. The more passes, the more secure the erasure.
+- Python 3.x
+- Required libraries:
+  - `tqdm`
+  - `plyer`
 
-3. **Enable Verbose Mode (Optional)**:
-   - You can choose to enable verbose mode to receive detailed progress updates during the operation.
+You can install the required packages using pip:
 
-4. **Directory Selection**:
-   - The script automatically selects the appropriate directory based on your operating system. Ensure the directory used is correct for your situation.
+```bash
+pip install tqdm plyer
 
-5. **Confirmation**:
-   - The script will display the available free space and ask for confirmation before proceeding with the secure erase.
-
-6. **Completion Notification**:
-   - Once the secure erase is complete, a desktop notification will inform you that the operation has finished successfully.
-
-## Important Notes
-- **Warning**: This script is intended to securely erase free space. Be cautious and ensure that you are not attempting to erase critical system directories (e.g., `/`, `C:\`, or your home directory). The script includes checks to prevent accidental erasure of such directories.
-- **Performance**: Depending on the amount of free space and the number of passes, the operation may take a considerable amount of time.
-
-## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Contributions
-Contributions are welcome! Please feel free to submit a pull request or report issues.
-
-## Author
-Harry Graham
-
-## Acknowledgements
-- `tqdm` for progress bar implementation.
-- `plyer` for cross-platform desktop notifications.
